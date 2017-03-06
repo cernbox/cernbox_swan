@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<info>
+    <id>cernboxswan</id>
+    <name>Cernbox Swan</name>
+    <description>This app enables an API for SWAN to create shared links</description>
+    <licence>AGPL</licence>
+    <author>Hugo Gonzalez Labrador</author>
+    <version>0.0.1</version>
+    <namespace>CernboxSwan</namespace>
+    <category>other</category>
+    <dependencies>
+        <owncloud min-version="8.2.2" />
+    </dependencies>
+</info>
