@@ -44,6 +44,23 @@ class PageController extends Controller {
 			return new DataResponse(['error' => 'file is not set']);
 		}
 
+		$owner = null;
+		if($_SERVER["ADFS_LOGIN"] && is_string($_SERVER["ADFS_LOGIN"])) {
+                               $owner = $_SERVER["ADFS_LOGIN"];
+                }
+
+		if($owner === null) {
+			return new DataResponse(['error' => 'cannot get owner from SSO']);
+		}
+
+		$user = \OC::$server->getUserManager()->get($owner);
+                if($user === null) {
+			return new DataResponse(['error' => 'owner does not exist']);
+                }
+		\OC_User::setUserId($user->getUID());
+
+
+
 		// remove eos prefix from filename to make it relative to user directory
 		$fileWithoutPrefix = trim(substr($file, strlen($this->eosPrefix)), '/');
 		$parts = explode('/', $fileWithoutPrefix);
@@ -59,16 +76,11 @@ class PageController extends Controller {
 			return new DataResponse(['error' => 'secrets do not match']);
 		}
 
-		$user = \OC::$server->getUserSession()->getUser();
-		if ($user === null) {
-			return new DataResponse(['error' => 'owner does not exist']);
-		}
-
-		$folder = \OC::$server->getUserFolder($user->getUID());
+		$folder = \OC::$server->getUserFolder($owner);
 		if (!$folder) {
 			return new DataResponse(['error' => 'cannot access user home folder']);
 		}
-
+		
 		try {
 			$node = $folder->get($file);
 		} catch (\OCP\Files\NotFoundException $e) {
