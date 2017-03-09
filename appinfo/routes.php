@@ -19,6 +19,6 @@
  */
 return [
     'routes' => [
-	   ['name' => 'page#create_link', 'url' => '/createlink', 'verb' => 'POST'],
+	   ['name' => 'page#create_link', 'url' => '/createlink', 'verb' => 'GET'],
     ]
 ];
