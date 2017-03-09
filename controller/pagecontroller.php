@@ -40,10 +40,6 @@ class PageController extends Controller {
 			return new DataResponse(['error' => 'secret is not set']);
 		}
 
-		if (!$owner) {
-			return new DataResponse(['error' => 'owner is not set']);
-		}
-
 		if (!$file) {
 			return new DataResponse(['error' => 'file is not set']);
 		}
